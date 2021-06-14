@@ -1,5 +1,6 @@
 package hu.flowacademy.springvizsga.service;
 
+import hu.flowacademy.springvizsga.exception.ValidateException;
 import hu.flowacademy.springvizsga.model.Team;
 import hu.flowacademy.springvizsga.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +27,24 @@ public class TeamService {
     }
 
     public Team save(Team team) {
+        validate(team);
         return teamRepository.save(team);
     }
 
     public Team update(String id, Team team) {
+        validate(team);
         return teamRepository.save(team.toBuilder().id(id).build());
+    }
+
+    public void validate(Team team) {
+        if (team.getName().equals("") || team.getName() == null) {
+            throw new ValidateException("Nem adtál meg nevet!!!");
+        }
+        if (team.getUniverse() == null) {
+            throw new ValidateException("Hiányzik a Universe!!!!");
+        }
+        if (team.getKind() == null) {
+            throw new ValidateException("Hiányzik a Kind!!!!");
+        }
     }
 }
