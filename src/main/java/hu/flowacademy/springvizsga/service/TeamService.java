@@ -37,7 +37,10 @@ public class TeamService {
     }
 
     public void validate(Team team) {
-        if (team.getName().equals("") || team.getName() == null) {
+        if (team.getName() == null) {
+            throw new ValidateException("Nem adtál meg nevet!!!");
+        }
+        if (team.getName().equals("")) {
             throw new ValidateException("Nem adtál meg nevet!!!");
         }
         if (team.getUniverse() == null) {
